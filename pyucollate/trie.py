@@ -1,17 +1,24 @@
+from typing import Self
+
+
 class Node:
+    value: list[list[int]] | None
+    children: dict[int, Self] | None
+
     __slots__ = ("value", "children")
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.value = None
         self.children = None
 
 
 class Trie:
+    root: Node
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.root = Node()
 
-    def add(self, key, value):
+    def add(self, key: list[int], value: list[list[int]]) -> None:
         curr_node = self.root
         for part in key:
             if curr_node.children is None:
@@ -19,7 +26,7 @@ class Trie:
             curr_node = curr_node.children.setdefault(part, Node())
         curr_node.value = value
 
-    def find_prefix(self, key):
+    def find_prefix(self, key: list[int]) -> tuple[list[int], list[list[int]] | None, list[int]]:
         curr_node = self.root
         success_index = 0
         success_value = None

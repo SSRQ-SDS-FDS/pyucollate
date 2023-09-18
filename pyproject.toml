@@ -1,0 +1,83 @@
+[tool.poetry]
+authors = ["Bpolitycki <bastian.politycki@unisg.ch>"]
+description = "Unicode sorting in Python made simple."
+include = [
+  {path = "pyuca/tables", format = [
+    "sdist",
+    "wheel",
+  ]},
+]
+license = "MIT"
+name = "pyucollate"
+readme = "README.md"
+version = "1.0.0"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+mypy = "^1.5.1"
+pytest = "^7.4.2"
+ruff = "^0.0.290"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.black] # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
+line-length = 100
+target-version = ["py311"]
+
+[tool.mypy] # https://mypy.readthedocs.io/en/latest/config_file.html
+files = ["**/*.py"]
+ignore_missing_imports = true
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+warn_unreachable = true
+
+[tool.pytest.ini_options] # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
+testpaths = ["src", "tests"]
+xfail_strict = true
+
+[tool.ruff] # https://github.com/charliermarsh/ruff
+fix = true
+ignore = ["D100", "D104", "E501", "PGH001", "PGH002", "PGH003", "RET504", "S101"]
+ignore-init-module-imports = true
+line-length = 100
+select = [
+  "A",
+  "ASYNC",
+  "B",
+  "C4",
+  "C90",
+  "D",
+  "DTZ",
+  "E",
+  "F",
+  "FLY",
+  "I",
+  "ISC",
+  "N",
+  "NPY",
+  "PGH",
+  "PIE",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "PT",
+  "RET",
+  "RUF",
+  "RSE",
+  "SIM",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+src = ["src", "tests"]
+target-version = "py311"
+unfixable = ["F401", "F841"]
