@@ -1,19 +1,9 @@
-# pyuca: Python Unicode Collation Algorithm implementation
+# pyucollate: Unicode sorting in Python made simple.
 
-[![Build Status](http://img.shields.io/travis/jtauber/pyuca.svg)](https://travis-ci.org/jtauber/pyuca)
-[![Coverage Status](http://img.shields.io/coveralls/jtauber/pyuca.svg)](https://coveralls.io/r/jtauber/pyuca?branch=master)
-![MIT License](http://img.shields.io/badge/license-MIT-brightgreen.svg)
+This library is a modernized version of [James K. Taubers](https://github.com/jtauber) [pyuca](https://github.com/jtauber/pyuca) with some small changes in the API.
 
-[![DOI](https://zenodo.org/badge/3769/jtauber/pyuca.svg)](https://zenodo.org/badge/latestdoi/3769/jtauber/pyuca)
-[![JOSS](http://joss.theoj.org/papers/10.21105/joss.00021/status.svg)](http://joss.theoj.org/papers/10.21105/joss.00021)
-
-
-This is a Python implementation of the
-[Unicode Collation Algorithm (UCA)](http://unicode.org/reports/tr10/). It
-passes 100% of the UCA conformance tests for Unicode 5.2.0 (Python 2.7),
-Unicode 6.3.0 (Python 3.3+), Unicode 8.0.0 (Python 3.5+), Unicode 9.0.0
-(Python 3.6+), and Unicode 10.0.0 (Python 3.7+) with a variable-weighting
-setting of Non-ignorable.
+As the original library it's a Python implementation of the [Unicode Collation Algorithm (UCA)](http://unicode.org/reports/tr10/). It
+passes 100% of the UCA conformance tests with a variable-weighting setting of Non-ignorable.
 
 ## What do you use it for?
 
@@ -33,43 +23,33 @@ beginnings with ``c``. **Expansion** is where a single letter is treated as
 though it were multiple letters. In German, ``ä`` is sorted as if it were
 ``ae``, i.e. after ``ad`` but before ``af``.
 
+## How does it differ from the original library and why did you fork it?
+
+`pyuca` is a well working python library, but apparently it is no longer actively maintained (see the open PRs and issues). So we decided to create our own fork with some minor changes:
+
+1. We added some modern python tooling like `pytest`, `ruff` or `mypy`
+2. Type hints were added to all functions and classes.
+3. A `sort()`-function was added to the collator interface (just a wrapper around Python's `sorted()`, which uses the `Collator` to generate sorting-keys).
+
 ## How to use it
 
 Here is how to use the ``pyuca`` module.
 
-    pip install pyuca
+```sh
+pip install install git+https://github.com/SSRQ-SDS-FDS/pyucollate.git
+```
 
 Usage example:
 
-    from pyuca import Collator
-    c = Collator()
+```python
+from pyucollate import Collator
+c = Collator()
 
-    assert sorted(["cafe", "caff", "café"]) == ["cafe", "caff", "café"]
-    assert sorted(["cafe", "caff", "café"], key=c.sort_key) == ["cafe", "café", "caff"]
-
-``Collator`` can also take an optional filename for specifying a custom
-collation element table.
-
-You can also import collators for specific Unicode versions,
-e.g. `from pyuca.collator import Collator_8_0_0`.
-But just `from pyuca import Collator` will ensure that the collator version
-matches the version of `unicodata` provided by the standard library for your
-version of Python.
-
-## How to cite it
-
-Tauber, J. K. (2016). pyuca: a Python implementation of the Unicode Collation Algorithm. The Journal of Open Source Software. DOI: 10.21105/joss.00021
+assert c.sort(["cafe", "caff", "café"]) == ["cafe", "caff", "café"]
+```
 
 ## License
 
 Python code is made available under an MIT license (see `LICENSE`).
 `allkeys.txt` is made available under the similar license defined in
 `LICENSE-allkeys`.
-
-## Contacting the Developer
-
-If you have any problems, questions or suggestions, it's best to file an issue
-on GitHub although you can also contact me at jtauber@jtauber.com.
-
-For more of my work on linguistics and Ancient Greek, see
-<http://jktauber.com/>.
